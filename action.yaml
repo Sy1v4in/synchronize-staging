@@ -1,5 +1,5 @@
 name: 'Synchronize staging branch'
-description: 'Reset the staging branch with the main branch merging some branches identified by the labels containing the target branch name.'
+description: 'Reset the staging branch with the main branch merging some branches identified by a specific label.'
 inputs:
   repository:
     description: 'The repository name in Github owner/repository. e.g: TheMenu/monrepo'
