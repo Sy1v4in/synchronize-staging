@@ -20,6 +20,7 @@ inputs:
 
 branding:
   color: 'blue'
+  icon: 'git-merge'
 
 runs:
   using: composite
