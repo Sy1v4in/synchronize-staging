@@ -9,7 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: jcbhmr/configure-bun-action@v1
+      - uses: oven-sh/setup-bun@v1
+        with:
+            bun-version: latest
+      - run: bun install
       - uses: actions4git/setup-git@v1
       - run: git add -Af && git commit -m 'Automatic changes'
       - run: git tag -f "$TAG" && git push -f origin "$TAG"
