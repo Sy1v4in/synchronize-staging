@@ -1,0 +1,26 @@
+name: 'Synchronize staging branch'
+description: 'Reset the staging branch with the main branch merging some branches identified by the labels containing the target branch name.'
+inputs:
+  repository:
+    description: 'The repository name in Github owner/repository. e.g: TheMenu/monrepo'
+    required: true
+    default: ${{ github.repository }}
+  source-branch:
+    description: 'The branch name used as base branch to synchronize the target one.'
+    required: true
+    default: 'main'
+  target-branch:
+    description: 'The branch name used as target.'
+    required: true
+    default: 'staging'
+  label:
+    description: 'The PR label that is used to find branch to merge in the target one.'
+    required: true
+    default: 'in-staging'
+
+branding:
+  color: 'blue'
+
+runs:
+  using: bun1
+  main: index.ts
