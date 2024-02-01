@@ -22,5 +22,8 @@ branding:
   color: 'blue'
 
 runs:
-  using: bun1
-  main: index.ts
+  using: composite
+  steps:
+    - uses: oven-sh/setup-bun@v1
+    - run: bun ${{ github.action_path }}/index.ts
+      shell: bash
