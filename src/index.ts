@@ -18,9 +18,6 @@ const execute = ({ githubToken, logger }: Context) => {
   const synchronizeBranchesAndLabels: SynchronizeBranchesAndLabels = async ({ repository, sourceBranch, targetBranch, label }) => {
     const github = githubProvider({ githubToken, logger })
 
-    await ensureCleanLocalRepo()
-    const previousBranch = await currentBranch()
-
     logger.info(`Checking out ${sourceBranch} and pulling`)
     await checkout(sourceBranch, { pull: true })
     logger.info(`Creating ${targetBranch} branch`)
@@ -31,10 +28,10 @@ const execute = ({ githubToken, logger }: Context) => {
     const branchNames = await github.branchesToSynchronize(repository, label)
     for (let branchName of branchNames) {
       try {
-        logger.info(`\t• merging branch ${branchName}`)
+        logger.debug(`\t• merging branch ${branchName}`)
         await merge(branchName)
       } catch (e) {
-        logger.error(`\t=> could not merge branch ${branchName}`)
+        logger.debug(`\t=> could not merge branch ${branchName}`)
         branchesForWhichTheMergeHasFailed.push(branchName)
         await abortMerge()
       }
@@ -44,15 +41,12 @@ const execute = ({ githubToken, logger }: Context) => {
       logger.warning(`List of branches that have fail when merged on ${targetBranch}:`)
       branchesForWhichTheMergeHasFailed.forEach(branch => console.log(`\t• ${branch}`))
       logger.warning(`They have to be merged manually`)
-      return
     }
 
     if (branchNames.length > 0) {
       logger.info(`Pushing ${targetBranch} to origin`)
       await pushForce(targetBranch)
     }
-
-    await checkout(previousBranch)
   }
 
   return {
