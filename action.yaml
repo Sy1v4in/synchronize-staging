@@ -3,19 +3,15 @@ description: 'Reset the staging branch with the main branch merging some branche
 inputs:
   repository:
     description: 'The repository name in Github owner/repository. e.g: TheMenu/monrepo'
-    required: true
     default: ${{ github.repository }}
   source-branch:
     description: 'The branch name used as base branch to synchronize the target one.'
-    required: true
     default: 'main'
   target-branch:
     description: 'The branch name used as target.'
-    required: true
     default: 'staging'
   label:
     description: 'The PR label that is used to find branch to merge in the target one.'
-    required: true
     default: 'in-staging'
 
 branding:
