@@ -26,5 +26,6 @@ runs:
   using: composite
   steps:
     - uses: oven-sh/setup-bun@v1
-    - run: bun ${{ github.action_path }}/index.ts
+    - uses: actions4git/setup-git@v1
+    - run: bun ./index.ts
       shell: bash
