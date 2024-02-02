@@ -1,4 +1,5 @@
 import { Octokit, type RestEndpointMethodTypes } from "@octokit/rest"
+import { type Context } from "./types"
 
 type ArrayElement<ArrayType extends readonly unknown[]> =
   ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
@@ -12,19 +13,24 @@ type Repository = {
   repo: string
 }
 
-const octokit = new Octokit({
-  auth: process.env.GH_TOKEN,
-})
-
 type BranchesToSynchronize = (repository: Repository, label: string) => Promise<string[]>
-const branchesToSynchronize: BranchesToSynchronize = async (repository, label) => {
-  const pullRequests: PullRequestsResponse = await octokit.rest.pulls.list(repository)
-  return pullRequests.data.filter(isOnTargetBranch(label)).map(branchName)
+
+const github = ({ githubToken }: Context) => {
+  const branchesToSynchronize: BranchesToSynchronize = async (repository, label) => {
+    const octokit = new Octokit({ auth: githubToken })
+
+    const pullRequests: PullRequestsResponse = await octokit.rest.pulls.list(repository)
+    return pullRequests.data.filter(isOnTargetBranch(label)).map(branchName)
+  }
+
+  const isOnTargetBranch = (labelName: string) => (pr: PullRequest): boolean =>
+    pr.labels.some(label => label.name === labelName)
+
+  const branchName = (pr: PullRequest): string => pr.head.ref
+
+  return {
+    branchesToSynchronize,
+  }
 }
 
-const isOnTargetBranch = (labelName: string) => (pr: PullRequest): boolean =>
-  pr.labels.some(label => label.name === labelName)
-
-const branchName = (pr: PullRequest): string => pr.head.ref
-
-export { branchesToSynchronize }
+export { github }
