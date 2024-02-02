@@ -1,5 +1,5 @@
 import { execute } from "./src"
-import { parseArgs } from 'bun'
+import { parseArgs } from "util"
 
 export async function run(): Promise<void> {
   try {
