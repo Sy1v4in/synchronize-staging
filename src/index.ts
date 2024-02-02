@@ -1,4 +1,4 @@
-import { abortMerge, checkout, createBranch, currentBranch, ensureCleanLocalRepo, merge, pushForce } from './git'
+import { abortMerge, checkout, createBranch, merge, pushForce } from './git'
 import { github as githubProvider } from './github'
 import { type Context } from './types'
 

@@ -1,13 +1,5 @@
 import { $, type ShellPromise } from "bun"
 
-type CurrentBranch = () => Promise<string>
-const currentBranch: CurrentBranch = async () => run($`git branch --show-current`)
-
-type EnsureCleanLocalRepo = () => Promise<void>
-const ensureCleanLocalRepo: EnsureCleanLocalRepo = async () => {
-  await run($`git diff --quiet`, "There are uncommitted changes, don't use this script on a dirty repository")
-}
-
 type Checkout = (branch: string, options?: { pull?: boolean, create?: boolean }) => Promise<void>
 const checkout: Checkout = async (branch, { pull = false, create = false } = {}) => {
   const checkoutOptions = create ? "-b" : ""
@@ -37,4 +29,4 @@ const run = async (command: ShellPromise, errorMessage?: string): Promise<string
   return stdout.toString().trim()
 }
 
-export { abortMerge, checkout, createBranch, currentBranch, ensureCleanLocalRepo, merge, pushForce }
+export { abortMerge, checkout, createBranch, merge, pushForce }
