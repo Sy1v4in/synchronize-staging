@@ -24,9 +24,9 @@ runs:
     - uses: oven-sh/setup-bun@v1
     - uses: actions4git/setup-git@v1
     - run: |
-        bun ${{ github.action_path }}/index.ts
-          --repository ${{ inputs.repository }}
-          --source-branch ${{ inputs.source-branch }}
-          --target-branch ${{ inputs.target-branch }}
+        bun ${{ github.action_path }}/index.ts \
+          --repository ${{ inputs.repository }} \
+          --source-branch ${{ inputs.source-branch }} \
+          --target-branch ${{ inputs.target-branch }} \
           --label ${{ inputs.label }}
       shell: bash
