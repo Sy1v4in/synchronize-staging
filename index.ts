@@ -11,7 +11,7 @@ export async function run(): Promise<void> {
         repository: { type: 'string' },
         'source-branch': { type: 'string' },
         'target-branch': { type: 'string' },
-        label: { type: 'boolean' },
+        label: { type: 'string' },
       },
       strict: true,
       allowPositionals: true,
