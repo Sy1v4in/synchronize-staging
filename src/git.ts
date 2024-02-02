@@ -8,10 +8,7 @@ const checkout: Checkout = async (branch, { pull = false, create = false } = {})
 }
 
 type CreateBranch = (branch: string) => Promise<void>
-const createBranch: CreateBranch = async (branch: string) => {
-  await run($`git branch -D ${branch}`)
-  await checkout(branch, { create: true })
-}
+const createBranch: CreateBranch = async (branch: string) => checkout(branch, { create: true })
 
 type Merge = (branch: string) => Promise<void>
 const merge: Merge = async branch => { await run($`git merge origin/${branch} --no-verify`) }
