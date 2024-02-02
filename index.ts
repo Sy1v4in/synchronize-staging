@@ -1,10 +1,13 @@
 import * as core from '@actions/core'
+import * as github from '@actions/github'
 
 import { execute } from "./src"
 
 export async function run(): Promise<void> {
   try {
     if (!process.env.GH_TOKEN) throw new Error('GH_TOKEN is not set')
+
+    core.info(JSON.stringify(github.context.payload, undefined, 2))
 
     const githubToken = process.env.GH_TOKEN
     const repository: string[] = core.getInput('repository', { required: true }).split('/');
