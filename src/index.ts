@@ -38,9 +38,9 @@ const execute = ({ githubToken, logger }: Context) => {
     }
 
     if (branchesForWhichTheMergeHasFailed.length > 0) {
-      logger.warning(`List of branches that have fail when merged on ${targetBranch}:`)
+      logger.warn(`List of branches that have fail when merged on ${targetBranch}:`)
       branchesForWhichTheMergeHasFailed.forEach(branch => console.log(`\t• ${branch}`))
-      logger.warning(`They have to be merged manually`)
+      logger.warn(`They have to be merged manually`)
     }
 
     if (branchNames.length > 0) {
