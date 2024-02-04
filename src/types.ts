@@ -1,8 +1,10 @@
+type LoggerFunction = (message?: any, ...optionalParams: any[]) => void
+
 export type Logger = {
-  debug: (message: string) => void
-  info: (message: string) => void
-  warn: (message: string) => void
-  error: (message: string) => void
+  debug: LoggerFunction
+  info: LoggerFunction
+  warn: LoggerFunction
+  error: LoggerFunction
 }
 
 export type Context = {
