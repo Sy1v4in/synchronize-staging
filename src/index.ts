@@ -31,7 +31,7 @@ const execute = ({ githubToken, logger }: Context) => {
         logger.debug(`\t• merging branch ${branchName}`)
         await merge(branchName)
       } catch (e) {
-        logger.debug(`\t=> could not merge branch ${branchName}`)
+        logger.debug(`\t=> could not merge branch ${branchName}`, e)
         branchesForWhichTheMergeHasFailed.push(branchName)
         await abortMerge()
       }
