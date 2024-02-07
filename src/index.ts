@@ -43,10 +43,8 @@ const execute = ({ githubToken, logger }: Context) => {
       logger.warn(`They have to be merged manually`)
     }
 
-    if (branchNames.length > 0) {
-      logger.info(`Pushing ${targetBranch} to origin`)
-      await pushForce(targetBranch)
-    }
+    logger.info(`Pushing ${targetBranch} to origin`)
+    await pushForce(targetBranch)
   }
 
   return {
