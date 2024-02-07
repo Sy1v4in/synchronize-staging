@@ -1,7 +1,7 @@
 import { execute } from "./src"
 import { parseArgs } from "util"
 
-export async function run(): Promise<void> {
+export async function run(): Promise<number> {
   try {
     if (!process.env.GH_TOKEN) throw new Error('GH_TOKEN is not set')
 
@@ -31,8 +31,11 @@ export async function run(): Promise<void> {
     const runtime = execute({ githubToken, logger: console })
     await runtime.synchronizeBranchesAndLabels({ repository: { owner: repository[0], repo: repository[1] }, sourceBranch, targetBranch, label })
   } catch (error) {
-    console.error(error);
+    console.info(error);
+    return -1
   }
+  return 0
 }
 
-await run()
+const status = await run()
+process.exit(status)
