@@ -13,6 +13,12 @@ inputs:
   label:
     description: 'The PR label that is used to find branch to merge in the target one.'
     default: 'in-staging'
+  user-name:
+    description: 'The user name used to push the branch.'
+    default: 'github-actions[bot]'
+  user-email:
+    description: 'The user email used to push the branch.'
+    default: 'github-actions[bot]@users.noreply.github.com'
 
 branding:
   color: 'blue'
@@ -22,8 +28,9 @@ runs:
   using: composite
   steps:
     - uses: oven-sh/setup-bun@v1
-    - uses: actions4git/setup-git@v1
     - run: |
+        git config user.name "${{ inputs.user-name }}"
+        git config user.email "${{ inputs.user-email }}"
         bun ${{ github.action_path }}/index.ts \
           --repository ${{ inputs.repository }} \
           --source-branch ${{ inputs.source-branch }} \
